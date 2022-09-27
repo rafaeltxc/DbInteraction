@@ -1,4 +1,4 @@
-# Java Web Dynamic Project
+# Java Dynamic Web Project
 
 ### Status
 On going
