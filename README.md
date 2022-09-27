@@ -1,8 +1,10 @@
-[STATUS]:
+#Java Web Dynamic Project
+
+### Status
 On going
 
-[OBJECTIVE]:
-Rating system, where the user can rate and review a movie, serie or tv show.
+### Implementation
+java MVC web application with singleton design pattern, MySQL DataBase, servlets and jsp implementation
 
-[IMPLEMENTATION]:
-Java WEB built in project with OracleSQL database.
+### Usage
+User cadastry, login, authentication and data fetch 
