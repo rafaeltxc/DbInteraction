@@ -1,2 +1,3 @@
 # WebApplications
-FullStack webApplications in different languages
+
+The projects are separeted into the branches, and each branch has it's own different project files
