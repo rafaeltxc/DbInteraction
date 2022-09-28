@@ -1,41 +1,36 @@
 package com.webapp.controller;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class UserServlet
- */
-@WebServlet("/UserServlet")
+import com.webapp.dao.BookDAO;
+import com.webapp.model.Book;
+
+@WebServlet("/Library")
 public class LibraryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+    private BookDAO dao;
+	
     public LibraryServlet() {
         super();
-        // TODO Auto-generated constructor stub
+        dao = new BookDAO();
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		
+		int idUser = 1;
+		
+		List<Book> bookList = dao.getAllByIdUser(idUser);
+		
+		request.setAttribute("nickname", "test");
+		request.setAttribute("lst", bookList);
+		request.getRequestDispatcher("Library.jsp").forward(request, response);
 	}
 
 }

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +21,7 @@
                 <p>Log Out</p>
             </a>
             <div class="titleHeader">
-                <h1>"user's" Library</h1>
+                <h1> ${nickname} Library</h1>
                 <img src="./resources/images/book.svg" alt="Book">
             </div>
             <div class="inf">
@@ -35,10 +37,10 @@
         </div>
         <div class="container">
             <h2>All Books</h2>
-            <a href="./Book.jsp" class="book">
-                <p class="title">Title</p>
-                <p class="text">Lorem ipsum dolor sit amet</p>
-            </a>
+	            <a href="./Book.jsp" class="book">
+	                <p class="title">${i.title}</p>
+	                <p class="text">${i.resume}</p>
+	            </a>
         </div>
     </main>
 </body>
