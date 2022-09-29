@@ -154,6 +154,7 @@ h1 {
     width: 70vw;
     height: 14vh;
     padding: 20px;
+    transition: .5s;   
 }
 
 .book:hover {
@@ -166,6 +167,10 @@ h1 {
     box-shadow: 0 5px #666;
     transform: translateY(2px);
     transition: 0.5;
+}
+
+.book {
+	margin-bottom: 15px;
 }
 
 .title {

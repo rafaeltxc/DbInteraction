@@ -15,21 +15,21 @@
     <div class="background"></div>
     <main>
         <div class="misc">
-            <img class="rocketImg" src="./resources/images/rocket.svg" alt="floating rocket">
+            <img class="rocketImg" src="./resources/images/rocket.svg" alt="Floating rocket">
         </div>
         <div class="signIn">
-            <form class="form" action="SignInServlet" method="post">
+            <form class="form" action="SignIn" method="post">
                 <fieldset>
                     <label for="login">NickName</label>
-                    <input type="text" placeholder="nickName">
+                    <input name="nickname" type="text" placeholder="nickName">
                 </fieldset>
                 <fieldset>
                     <label for="login">Password</label>
-                    <input type="password" placeholder="*****">
+                    <input name="password" type="password" placeholder="*****">
                 </fieldset>
                 <a href="#">Forgot password?</a>
                 <input type="submit" class="btn" value="SignIn">
-                <a href="./SignUp.jsp">Don't have an account?</a>
+                <a href="/Library/SignUp">Don't have an account?</a>
             </form>
         </div>
     </main>

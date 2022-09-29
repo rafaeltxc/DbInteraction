@@ -90,7 +90,7 @@ public class BookDAO {
 		return lst;
 	}
 	
-	public Book getById(int id) {
+	public Book getById(Long id) {
 		try {
 			ConnectionManager.getInstance();
 			con = ConnectionManager.getConnection();
@@ -113,7 +113,7 @@ public class BookDAO {
 		return bk;
 	}
 	
-	public List<Book> getAllByIdUser(int id) {
+	public List<Book> getAllByIdUser(Long id) {
 		List<Book> lst = new ArrayList<>();
 		try {
 			ConnectionManager.getInstance();

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.webapp.dao.UserDAO;
 import com.webapp.model.User;
 
-@WebServlet("/SignUpServlet")
+@WebServlet("/SignUp")
 public class SignUpServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UserDAO dao;
@@ -24,6 +24,10 @@ public class SignUpServlet extends HttpServlet {
         dao = new UserDAO();
     }
 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	request.getRequestDispatcher("SignUp.jsp").forward(request, response);
+    }
+    
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		User u = new User();
@@ -44,14 +48,12 @@ public class SignUpServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		if(dao.existsNickname(nickname) == false) {
-			u.setNicknameUser(nickname);
-			u.setPassword(password);
-			u.setBirthUser(instance);
-			dao.insert(u);
-		} else {
-			System.out.println("err");
-		}
+		u.setNicknameUser(nickname);
+		u.setPassword(password);
+		u.setBirthUser(instance);
+		dao.insert(u);
+		
+		response.sendRedirect("/Library/SignIn");
 			
 	}
 

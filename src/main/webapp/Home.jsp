@@ -18,9 +18,9 @@
             <h1>Manage your library!</h1>
         </div>
         <div class="mainDiv">
-            <a href="./SignUp.jsp"><button>Create an Account</button></a>
+            <a href="./SignUp"><button>Create an Account</button></a>
             <img src="./resources/images/book.svg" alt="Book">
-            <a href="./SignIn.jsp"><button>Enter your account</button></a>
+            <a href="./SignIn"><button>Enter your account</button></a>
         </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.3.2/tsparticles.bundle.min.js"></script>

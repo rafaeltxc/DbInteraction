@@ -15,9 +15,9 @@
 		<div class="background"></div>
 		<main>
 			<div class="signUp">
-				<form class="form" action="SignUpServlet" method="post">
+				<form class="form" action="SignUp" method="post">
 					<fieldset>
-						<label for="login">Insert your email</label>
+						<label for="login">Choose a nickname</label>
 						<input name="nickname" type="text" placeholder="Nickname">
 					</fieldset>
 					<fieldset>
@@ -134,7 +134,7 @@
 							<option value="1968">1968</option>
 						</select>
 					</div>
-					<a href="./SignIn.jsp">Already have an account?</a>
+					<a href="/Library/SignIn">Already have an account?</a>
 					<input type="submit" class="btn" value="SignUp" />
 				</form>
 			</div>

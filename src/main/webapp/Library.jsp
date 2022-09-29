@@ -16,12 +16,12 @@
 <body>
     <main>
         <div class="header">
-            <a href="./Home.jsp" class="return">
+            <a href="/Home" class="return">
                 <img src="./resources/images/leftArrow.png" alt="Arrow">
                 <p>Log Out</p>
             </a>
             <div class="titleHeader">
-                <h1> ${nickname} Library</h1>
+                <h1> ${nickname}'s Library</h1>
                 <img src="./resources/images/book.svg" alt="Book">
             </div>
             <div class="inf">
@@ -29,7 +29,7 @@
                     <img src="./resources/images/search.svg" alt="search">
                     <input type="search" name="search" id="search" placeholder="Which book are you looking for?">
                 </div>
-                <a href="./NewBook.jsp" class="newBook">
+                <a href="/Library/NewBook" class="newBook">
                     <p>New Book</p>
                     <img src="./resources/images/plus.svg" alt="Plus sign">
                 </a>
@@ -37,10 +37,12 @@
         </div>
         <div class="container">
             <h2>All Books</h2>
-	            <a href="./Book.jsp" class="book">
-	                <p class="title">${i.title}</p>
-	                <p class="text">${i.resume}</p>
+            <c:forEach items="${list}" var="t">
+	            <a href="/Book" class="book">
+	                <p class="title">${t.title}</p>
+	                <p class="text">${t.resume}</p>
 	            </a>
+            </c:forEach>
         </div>
     </main>
 </body>

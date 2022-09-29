@@ -23,14 +23,18 @@ public class LibraryServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		int idUser = 1;
+		request.getRequestDispatcher("Library.jsp").forward(request, response);
+
+		request.getSession();
+		long idUser = (Long) request.getSession().getAttribute("idUser");
 		
 		List<Book> bookList = dao.getAllByIdUser(idUser);
-		
-		request.setAttribute("nickname", "test");
-		request.setAttribute("lst", bookList);
-		request.getRequestDispatcher("Library.jsp").forward(request, response);
+		request.getSession().setAttribute("list", bookList);
+
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);		
 	}
 
 }

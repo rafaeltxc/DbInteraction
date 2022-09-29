@@ -13,7 +13,7 @@
 </head>
 <body>
     <main>
-        <a href="./Library.jsp" class="return">
+        <a href="./Library" class="return">
             <img src="./resources/images/leftArrow.png" alt="Arrow">
             <p>Return</p>          
         </a>
