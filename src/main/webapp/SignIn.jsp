@@ -18,6 +18,7 @@
             <img class="rocketImg" src="./resources/images/rocket.svg" alt="Floating rocket">
         </div>
         <div class="signIn">
+        	${error}
             <form class="form" action="SignIn" method="post">
                 <fieldset>
                     <label for="login">NickName</label>

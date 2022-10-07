@@ -1,22 +1,27 @@
 package validation;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.webapp.dao.BookDAO;
-import com.webapp.dao.UserDAO;
-import com.webapp.model.Book;
-import com.webapp.model.User;
 
 public class Main {
 
 	public static void main(String[] args) {
 		
-		
-		BookDAO bkDAO = new BookDAO();
-		
-		
         
+		String info = "bom / dia";
+    	String id = "";
+    	
+    	String reverse = "";
+    	for(int i=0; i<info.length(); i++) {
+    		reverse = info.charAt(i) + reverse;
+    	}
+
+    	for(int i=0; i<reverse.length(); i++) {
+    		if(reverse.charAt(i) == '/') {
+    			break;
+    		}
+    		id += reverse.charAt(i);
+    	}
+    	
+    	System.out.println(id);
 	}
 
 }

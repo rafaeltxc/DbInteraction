@@ -6,17 +6,23 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-@WebServlet("/Home")
-public class HomeServlet extends HttpServlet {
+@WebServlet("/Logout")
+public class Logout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public HomeServlet() {
+    public Logout() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/Home.jsp").include(request, response);
+
+		HttpSession session = request.getSession();
+		session.invalidate();
+		response.sendRedirect("/Library/User");
+		return;
+		
 	}
 
 }

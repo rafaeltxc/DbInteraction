@@ -9,8 +9,9 @@ import java.util.List;
 
 import com.webapp.connector.ConnectionManager;
 import com.webapp.model.User;
+import com.webapp.repository.UserRepository;
 
-public class UserDAO {
+public class UserDAO implements UserRepository {
 
 	private Connection con;
 	private User user;
@@ -24,7 +25,6 @@ public class UserDAO {
 			stmt.setString(1, u.getNicknameUser());
 			stmt.setString(2,u.getPassword());
 			stmt.setDate(3, date);
-			System.out.println("Values inserted with success");
 			return stmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -46,7 +46,6 @@ public class UserDAO {
 			stmt.setString(2, u.getPassword());
 			stmt.setDate(3, date);
 			stmt.setLong(4, u.getIdUser());
-			System.out.println("Update executed with success");
 			return stmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -60,7 +59,6 @@ public class UserDAO {
 			con = ConnectionManager.getConnection();
 			PreparedStatement stmt = con.prepareStatement("DELETE FROM tbl_user WHERE id_user = ?");
 			stmt.setLong(1, u.getIdUser());
-			System.out.println("Detele executed with success");
 			return stmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();

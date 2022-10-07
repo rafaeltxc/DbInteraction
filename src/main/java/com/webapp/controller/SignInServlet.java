@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.webapp.dao.UserDAO;
+import com.webapp.factory.DAOFactory;
 import com.webapp.model.User;
 
 @WebServlet("/SignIn")
@@ -18,11 +19,12 @@ public class SignInServlet extends HttpServlet {
 	
     public SignInServlet() {
         super();
-        dao = new UserDAO();
+        dao = DAOFactory.getUserDAO();
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	request.getRequestDispatcher("SignIn.jsp").forward(request, response);
+    	request.getRequestDispatcher("/SignIn.jsp").include(request, response);
     }
     
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -32,11 +34,11 @@ public class SignInServlet extends HttpServlet {
 		
 		User user = dao.getByNick(nickname);
 		if(user.getPassword().equals(password)) {
-			request.getSession();
+			request.getSession(true);
 			request.getSession().setAttribute("idUser", user.getIdUser());
 			request.getSession().setAttribute("nickname", user.getNicknameUser());
 						
-			response.sendRedirect("/Library/Library");
+			response.sendRedirect("/Library/User/" + nickname);
 		}
 	}
 

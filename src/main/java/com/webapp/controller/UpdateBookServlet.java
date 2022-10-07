@@ -12,24 +12,29 @@ import com.webapp.factory.DAOFactory;
 import com.webapp.model.Book;
 import com.webapp.model.User;
 
-@WebServlet("/NewBook")
-public class NewBookServlet extends HttpServlet {
+@WebServlet(name = "updateBook", urlPatterns = "/UpdateBook/*")
+public class UpdateBookServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private BookDAO dao;
 	private Book bk;
 	private User us;
-	
-    public NewBookServlet() {
+    
+    public UpdateBookServlet() {
         super();
         dao = DAOFactory.getBookDAO();
         bk = new Book();
         us = new User();
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	request.getRequestDispatcher("/NewBook.jsp").forward(request, response);
-    }
-    
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getSession(false);
+    	String title = (String) request.getSession().getAttribute("title");
+    	String resume = (String) request.getSession().getAttribute("resume");
+    	String book = (String) request.getSession().getAttribute("book");
+		
+		request.getRequestDispatcher("/UpdateBook.jsp").forward(request, response);
+	}
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String title = request.getParameter("title");
@@ -37,14 +42,16 @@ public class NewBookServlet extends HttpServlet {
 		String book = request.getParameter("book");
 		
 		request.getSession();
+		long idBook = (Long) request.getSession().getAttribute("idBook");
 		long idUser = (Long) request.getSession().getAttribute("idUser");
 		String nickname = (String) request.getSession().getAttribute("nickname");
 		
-		us.setIdUser(idUser);
+		bk.setIdBook(idBook);
 		bk.setTitle(title);
 		bk.setResume(resume);
 		bk.setBook(book);
-		dao.insert(bk, us);
+		us.setIdUser(idUser);
+		dao.update(bk, us);
 		
 		response.sendRedirect("/Library/User/" + nickname);
 		

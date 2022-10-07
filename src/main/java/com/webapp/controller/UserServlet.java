@@ -1,6 +1,7 @@
 package com.webapp.controller;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,26 +11,32 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.webapp.dao.BookDAO;
+import com.webapp.factory.DAOFactory;
 import com.webapp.model.Book;
 
-@WebServlet("/Library")
-public class LibraryServlet extends HttpServlet {
+@WebServlet(name = "userServlet", urlPatterns = {"/User", "/User/*"})
+public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private BookDAO dao;
 	
-    public LibraryServlet() {
+    public UserServlet() {
         super();
-        dao = new BookDAO();
+        dao = DAOFactory.getBookDAO();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("Library.jsp").forward(request, response);
-
-		request.getSession();
+		if(request.getSession().getAttribute("idUser").equals("null")) {
+			response.sendRedirect("/Library/SignIn");
+		}
+		
+		request.getSession(false);
 		long idUser = (Long) request.getSession().getAttribute("idUser");
 		
 		List<Book> bookList = dao.getAllByIdUser(idUser);
-		request.getSession().setAttribute("list", bookList);
+		Collections.reverse(bookList);
+		
+		request.setAttribute("list", bookList);
+		request.getRequestDispatcher("/User.jsp").forward(request, response);
 
 	}
 	

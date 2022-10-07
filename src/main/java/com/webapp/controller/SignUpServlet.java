@@ -12,26 +12,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.webapp.dao.UserDAO;
+import com.webapp.factory.DAOFactory;
 import com.webapp.model.User;
 
 @WebServlet("/SignUp")
 public class SignUpServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UserDAO dao;
+	private User u;
  
     public SignUpServlet() {
         super();
-        dao = new UserDAO();
+        dao = DAOFactory.getUserDAO();
+        u = new User();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	request.getRequestDispatcher("SignUp.jsp").forward(request, response);
+    	request.getRequestDispatcher("/SignUp.jsp").forward(request, response);
     }
     
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		User u = new User();
-		
+				
 		String nickname = request.getParameter("nickname");
 		String password = request.getParameter("password");
 		

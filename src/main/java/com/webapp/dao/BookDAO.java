@@ -9,8 +9,9 @@ import java.util.List;
 import com.webapp.connector.ConnectionManager;
 import com.webapp.model.Book;
 import com.webapp.model.User;
+import com.webapp.repository.BookRepository;
 
-public class BookDAO {
+public class BookDAO implements BookRepository {
 
 	private Connection con;
 	private Book bk;
@@ -24,7 +25,6 @@ public class BookDAO {
 			stmt.setString(2, b.getResume());
 			stmt.setString(3, b.getBook());
 			stmt.setLong(4, u.getIdUser());
-			System.out.println("Values inserted with success");
 			return stmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -32,7 +32,7 @@ public class BookDAO {
 		return 0;
 	}
 	
-	public int update(Book b) {
+	public int update(Book b, User u) {
 		try {
 			ConnectionManager.getInstance();
 			con = ConnectionManager.getConnection();
@@ -40,12 +40,13 @@ public class BookDAO {
 					+ "title_book = ?, "
 					+ "resume_book = ?, "
 					+ "book = ? "
-					+ "WHERE id_book = ?");
+					+ "WHERE fk_id_user = ? "
+					+ "AND id_book = ?");
 			stmt.setString(1, b.getTitle());
 			stmt.setString(2, b.getResume());
 			stmt.setString(3, b.getBook());
-			stmt.setLong(4, b.getIdBook());
-			System.out.println("Update executed with success");
+			stmt.setLong(4, u.getIdUser());
+			stmt.setLong(5, b.getIdBook());
 			return stmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -53,11 +54,11 @@ public class BookDAO {
 		return 0;
 	}
 	
-	public int delete(Book b) {
+	public long delete(long id) {
 		try {
 			con = ConnectionManager.getConnection();
 			PreparedStatement stmt = con.prepareStatement("DELETE FROM tbl_book WHERE id_book = ?");
-			stmt.setLong(1, b.getIdBook());
+			stmt.setLong(1, id);
 			return stmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -90,7 +91,7 @@ public class BookDAO {
 		return lst;
 	}
 	
-	public Book getById(Long id) {
+	public Book getById(long id) {
 		try {
 			ConnectionManager.getInstance();
 			con = ConnectionManager.getConnection();
@@ -113,7 +114,7 @@ public class BookDAO {
 		return bk;
 	}
 	
-	public List<Book> getAllByIdUser(Long id) {
+	public List<Book> getAllByIdUser(long id) {
 		List<Book> lst = new ArrayList<>();
 		try {
 			ConnectionManager.getInstance();
@@ -138,13 +139,14 @@ public class BookDAO {
 		return lst;
 	}
 	
-	public List<Book> getAllByName(String nick) {
+	public List<Book> getAllByName(String name, long id) {
 		List<Book> lst = new ArrayList<>();
 		try {
 			ConnectionManager.getInstance();
 			con = ConnectionManager.getConnection();
-			PreparedStatement stmt = con.prepareStatement("SELECT * FROM tbl_book WHERE title_book LIKE ?");
-			stmt.setString(1, nick);
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM tbl_book WHERE title_book LIKE ? AND fk_id_user = ?");
+			stmt.setString(1, "%" + name + "%");
+			stmt.setLong(2, id);
 			ResultSet rs = stmt.executeQuery();
 			
 			while(rs.next()) {
