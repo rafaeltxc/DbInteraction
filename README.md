@@ -1,10 +1,7 @@
 # Java Dynamic Web Project
 
-### Status
-On going
-
 ### Implementation
-java MVC web application with singleton design pattern, MySQL DataBase, servlets and jsp implementation
+java MVC web application with singleton and connectionFactory design patterns, MySQL DataBase, servlets and jsp implementation
 
 ### Usage
-User cadastry, login, authentication and data fetch 
+User registration, login, authentication and data fetch 

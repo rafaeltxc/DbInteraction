@@ -18,6 +18,7 @@
 				<form class="form" action="SignUp" method="post">
 					<fieldset>
 						<label for="login">Choose a nickname</label>
+						<div class="errorMessage">${error}</div>
 						<input name="nickname" type="text" placeholder="Nickname">
 					</fieldset>
 					<fieldset>

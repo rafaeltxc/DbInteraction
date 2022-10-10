@@ -25,10 +25,12 @@ public class UserServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getSession().getAttribute("idUser").equals("null")) {
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+		if(request.getSession().getAttribute("idUser") == null) {
 			response.sendRedirect("/Library/SignIn");
+			return;
 		}
-		
+			
 		request.getSession(false);
 		long idUser = (Long) request.getSession().getAttribute("idUser");
 		

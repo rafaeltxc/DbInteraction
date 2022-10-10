@@ -18,23 +18,24 @@ import com.webapp.model.User;
 @WebServlet("/SignUp")
 public class SignUpServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private UserDAO dao;
 	private User u;
  
     public SignUpServlet() {
         super();
-        dao = DAOFactory.getUserDAO();
         u = new User();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	request.setAttribute("error", "");
     	request.getRequestDispatcher("/SignUp.jsp").forward(request, response);
     }
     
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-				
-		String nickname = request.getParameter("nickname");
-		String password = request.getParameter("password");
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+		response.setIntHeader("Refresh", 1);
+		
+		String nickname = request.getParameter("nickname").strip();
+		String password = request.getParameter("password").strip();
 		
 		String month = request.getParameter("month");
 		String day = request.getParameter("day");
@@ -49,13 +50,23 @@ public class SignUpServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		u.setNicknameUser(nickname);
-		u.setPassword(password);
-		u.setBirthUser(instance);
-		dao.insert(u);
-		
-		response.sendRedirect("/Library/SignIn");
+		String errorMessage = "";
+		UserDAO dao = new UserDAO();
+		if(dao.getByNick(nickname) != null) {
+			errorMessage = "NickName already exists";
+			request.setAttribute("error", errorMessage);
+			request.getRequestDispatcher("/SignUp.jsp").forward(request, response);
+			return;
+		} else {
+			u.setNicknameUser(nickname);
+			u.setPassword(password);
+			u.setBirthUser(instance);
+			dao.insert(u);
 			
+			response.sendRedirect("/Library/SignIn");
+			return;
+		}
+		
 	}
 
 }

@@ -18,14 +18,15 @@
             <img class="rocketImg" src="./resources/images/rocket.svg" alt="Floating rocket">
         </div>
         <div class="signIn">
-        	${error}
             <form class="form" action="SignIn" method="post">
                 <fieldset>
                     <label for="login">NickName</label>
+                    <div class="errorMessage">${invalidUser}</div>
                     <input name="nickname" type="text" placeholder="nickName">
                 </fieldset>
                 <fieldset>
                     <label for="login">Password</label>
+                    <div class="errorMessage">${invalidPassword}</div>
                     <input name="password" type="password" placeholder="*****">
                 </fieldset>
                 <a href="#">Forgot password?</a>

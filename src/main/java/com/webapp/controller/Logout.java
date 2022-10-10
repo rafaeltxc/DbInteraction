@@ -20,7 +20,7 @@ public class Logout extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		session.invalidate();
-		response.sendRedirect("/Library/User");
+		response.sendRedirect("/Library/SignIn");
 		return;
 		
 	}
