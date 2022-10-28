@@ -1,7 +1,7 @@
 const {db} = require('../connection.js');
 
 function insert(firstName, lastName, email, birth) {
-    if(db.state === 'disconnected') {
+    if(db.state === 'connected') {
         db.connect();
     }
     const query = `INSERT INTO tbl_user (first_name, last_name, email, birth) VALUES ('${firstName}', '${lastName}', '${email}', '${birth}')`;
@@ -22,7 +22,7 @@ function insert(firstName, lastName, email, birth) {
 }
 
 function update(firstName, lastName, email, birth, id) {
-    if(db.state === 'disconnected') {
+    if(db.state === 'connected') {
         db.connect();
     }
     const query = `UPDATE tbl_user SET first_name = '${firstName}', last_name = '${lastName}', email = '${email}', birth = '${birth}' WHERE id_user = ${id}`;
@@ -44,7 +44,7 @@ function update(firstName, lastName, email, birth, id) {
 }
 
 function deletetion(id) {
-    if(db.state === 'disconnected') {
+    if(db.state === 'connected') {
         db.connect();
     }
     const query = `DELETE FROM tbl_user WHERE id_user = ${id}`;
@@ -66,25 +66,35 @@ function deletetion(id) {
 }
 
 function getAll(callback) {
-    if(db.state === 'disconnected') {
+    if(db.state === 'connected') {
         db.connect();
     }
-    const query = 'SELECT * FROM tbl_user;'
-    db.query(query).on('result', (row) => {
-        callback('Unable to get data', row);
+    const query = 'SELECT * FROM tbl_user;';
+    return new Promise((resolve, reject) => {
+        db.query(query, (err, rows) => {
+            if(err) {
+                reject(err);
+            }
+            resolve(rows);
+        })
+        db.end();
     })
-    db.end();
 }
 
-function getById(id, callback) {
-    if(db.state === 'disconnected') {
+function getById(id) {
+    if(db.state === 'connected') {
         db.connect();
     }
     const query = `SELECT * FROM tbl_user WHERE id_user = ${id}`;
-    db.query(query).on('result', (row) => {
-        callback('Unable to get data', row);
+    return new Promise((resolve, reject) => {
+        db.query(query, (err, rows) => {
+            if(err) {
+                reject(err);
+            }
+            resolve(rows);
+        })
+        db.end();
     })
-    db.end();
 }
 
 let pad = function(num) { return ('00'+num).slice(-2) };
@@ -92,16 +102,7 @@ let date;
 date = new Date();
 date = date.getUTCFullYear()         + '-' +
         pad(date.getUTCMonth() + 1)  + '-' +
-        pad(date.getUTCDate())
-
-
-deletetion(2).then((result) => {
-    getAll((resolve) => {
-        console.log(result);
-    })
-}).catch((err) => {
-    
-});;
+        pad(date.getUTCDate());
 
 module.exports = {
     insert,
