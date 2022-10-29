@@ -4,12 +4,6 @@ const controller = require('./controller/UserController.js');
 
 const server = http.createServer((req, res) => {
 switch(req.url) {
-    case('/'):
-        res.writeHead(302, {'location': '/home'});
-    case('/home'):
-        res.writeHead(200, {'Content-Type': 'text/html'});
-        res.end(fs.readFileSync('./views/home.html'));
-        break;
     case('/User'):
         if(req.method === 'GET') {
             controller.findAll(req, res);
@@ -30,7 +24,7 @@ switch(req.url) {
         break;
     default:
         res.writeHead(400, {'Content-Type': 'text/html'});
-        res.end(fs.readFileSync('./views/404.html'));
+        res.end('Page not found');
 }})
 
 server.listen(3000, 'localhost', (err) => {
