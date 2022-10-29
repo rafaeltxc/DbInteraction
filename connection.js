@@ -7,22 +7,6 @@ const db = mysql.createConnection({
     database: "authentication"
 });
 
-function connect() {
-    return new Promise((resolve, reject) => {
-        resolve(
-            db.connect((err) => {
-                if(err) {
-                    throw err;
-                }
-            })
-        );
-        reject(
-            new Error('Unable to connect')
-        )
-    })
-}
-
 module.exports = {
-    db,
-    connect
+    db
 }

@@ -11,7 +11,22 @@ switch(req.url) {
         res.end(fs.readFileSync('./views/home.html'));
         break;
     case('/User'):
-        controller.findAll();
+        if(req.method === 'GET') {
+            controller.findAll(req, res);
+        } else if(req.method === 'POST') {
+            controller.insert(req, res);
+        } else if(req.method === 'PUT') {
+            controller.update(req, res);
+        }
+        break;
+    case('/User/' + req.url.split('/')[2]):
+        const id = req.url.split('/')[2];
+
+        if(req.method === 'GET') {
+            controller.findById(id, req, res)
+        } else if(req.method === 'DELETE') {
+            controller.deletion(id, req, res)
+        }
         break;
     default:
         res.writeHead(400, {'Content-Type': 'text/html'});

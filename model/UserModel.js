@@ -1,9 +1,6 @@
 const {db} = require('../connection.js');
 
 function insert(firstName, lastName, email, birth) {
-    if(db.state === 'connected') {
-        db.connect();
-    }
     const query = `INSERT INTO tbl_user (first_name, last_name, email, birth) VALUES ('${firstName}', '${lastName}', '${email}', '${birth}')`;
     return new Promise((resolve, reject) => {
         resolve(
@@ -12,7 +9,6 @@ function insert(firstName, lastName, email, birth) {
                     throw err;
                 } else {
                     db.commit();
-                    db.end();
                 }
         }));
         reject(
@@ -22,9 +18,6 @@ function insert(firstName, lastName, email, birth) {
 }
 
 function update(firstName, lastName, email, birth, id) {
-    if(db.state === 'connected') {
-        db.connect();
-    }
     const query = `UPDATE tbl_user SET first_name = '${firstName}', last_name = '${lastName}', email = '${email}', birth = '${birth}' WHERE id_user = ${id}`;
     return new Promise((resolve, reject) => {
         resolve(
@@ -33,7 +26,6 @@ function update(firstName, lastName, email, birth, id) {
                     throw err;
                 } else {
                     db.commit();
-                    db.end();
                 }
             })
         );
@@ -44,9 +36,6 @@ function update(firstName, lastName, email, birth, id) {
 }
 
 function deletetion(id) {
-    if(db.state === 'connected') {
-        db.connect();
-    }
     const query = `DELETE FROM tbl_user WHERE id_user = ${id}`;
     return new Promise((resolve, reject) => {
         resolve(
@@ -55,7 +44,6 @@ function deletetion(id) {
                     throw err;
                 } else {
                     db.commit();
-                    db.end();
                 }
             })
         );
@@ -65,10 +53,7 @@ function deletetion(id) {
     })
 }
 
-function getAll(callback) {
-    if(db.state === 'connected') {
-        db.connect();
-    }
+function getAll() {
     const query = 'SELECT * FROM tbl_user;';
     return new Promise((resolve, reject) => {
         db.query(query, (err, rows) => {
@@ -77,14 +62,10 @@ function getAll(callback) {
             }
             resolve(rows);
         })
-        db.end();
     })
 }
 
 function getById(id) {
-    if(db.state === 'connected') {
-        db.connect();
-    }
     const query = `SELECT * FROM tbl_user WHERE id_user = ${id}`;
     return new Promise((resolve, reject) => {
         db.query(query, (err, rows) => {
@@ -93,7 +74,6 @@ function getById(id) {
             }
             resolve(rows);
         })
-        db.end();
     })
 }
 
