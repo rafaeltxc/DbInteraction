@@ -1,39 +1,33 @@
 const express = require('express');
-const morgan = require('morgan');
-const mongoose = require('mongoose');
+const connection = require('./connection.js');
+const userRoutes = require('./routes/userRoutes.js');
 
 const app = express();
-app.listen(3000);
+
+connection.connect((err) => {
+    if(!err) {
+        app.listen(3000, () => {
+            console.log('listening at port 3000');
+        })
+    } else {
+        throw err;
+    }
+})
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
-app.use(express.urlencoded({ extended: true}));
-app.use(morgan('dev'));
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
     res.redirect('/home');
 })
 
 app.get('/home', (req, res) => {
-    res.render('home', { css: '/css/home.css', title: 'Home' });
+    res.render('home', { title: 'Home', css: '/css/home.css'});
 })
 
-app.get('/sign-in', (req, res) => {
-    res.render('signIn', { css: '/css/signIn.css', title: 'Sign-in' });
-})
+app.use(userRoutes);
 
-app.get('/sign-up', (req, res) => {
-    res.render('signUp', { css: '/css/signUp.css', title: 'Sign-up' });
-})
-
-app.get('/library', (req, res) => {
-    res.render('library', { css: '/css/library.css', title: 'Library' });
-})
-
-app.get('/book', (req, res) => {
-    res.render('book', { css: '/css/book.css', title: 'Book' });
-})
-
-app.get('/new-book', (req, res) => {
-    res.render('newBook', { css: '/css/newBook.css', title: 'new-book' });
+app.use((req, res) => {
+    res.status(404).render('404', { title: '404', css: '/css/404.css'});
 })
