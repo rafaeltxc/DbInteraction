@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require('express-session');
 const connection = require('./connection.js');
 const userRoutes = require('./routes/userRoutes.js');
 
@@ -16,7 +17,13 @@ connection.connect((err) => {
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
+
+app.use(session({
+    secret: 'secret-key',
+    resave: 'false',
+    saveUninitialized: 'false',
+}))
 
 app.get('/', (req, res) => {
     res.redirect('/home');

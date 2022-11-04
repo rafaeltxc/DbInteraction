@@ -13,44 +13,44 @@ async function findAll() {
         .forEach(user => {
             lst.push(user);
         })
-        .then((result) => {
-            //temporary
-            console.log(lst);
-        }).catch((err) => {
-            throw err;
-        });
 
-    instance().close();
+    return lst;
 }
 
 async function find(id) {
     await getInstance();
 
+    let user;
     await instance().db().collection('users').findOne({ _id: ObjectId(id)})
         .then((result) => {
-            //temporary
-            console.log(result);
+            user = result;
         })
         .catch((err) => {
             throw err;
         });
 
-    instance().close(); 
+    return user;
+}
+
+async function getIdUser(obj) {
+    obj = new String(obj._id).split("'")[0];
+    return obj;
 }
 
 async function findByEmail(email) {
     await getInstance();
-
+    console.log(email)
+    let userMail;
     await instance().db().collection('users').findOne({ email: email })
         .then((result) => {
-            //temporary
-            console.log(result);
+            userMail = result;
         })
         .catch((err) => {
             throw err;
         })
 
-    instance().close();
+    console.log(userMail);
+    return userMail;
 }
 
 async function post(body) {
@@ -65,7 +65,6 @@ async function post(body) {
             throw err;
         });
 
-    instance().close();
 }
 
 async function patch(id, body) {
@@ -80,7 +79,6 @@ async function patch(id, body) {
             throw err;
         })
 
-    instance().close();
 }
 
 async function deletion(id) {
@@ -95,12 +93,12 @@ async function deletion(id) {
             throw err;
         })
 
-    instance().close();
 }
 
 module.exports = {
     findAll,
     find,
+    getIdUser,
     findByEmail,
     post,
     patch,
