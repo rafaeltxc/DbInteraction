@@ -1,8 +1,5 @@
 # Node Web Project
 
-### Status
-On going
-
 ### Implementation
 Node Express MVC web application with mongoDB api and EJS viewEngine
 
