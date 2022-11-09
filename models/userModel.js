@@ -39,7 +39,6 @@ async function getIdUser(obj) {
 
 async function findByEmail(email) {
     await getInstance();
-    console.log(email)
     let userMail;
     await instance().db().collection('users').findOne({ email: email })
         .then((result) => {
@@ -49,7 +48,6 @@ async function findByEmail(email) {
             throw err;
         })
 
-    console.log(userMail);
     return userMail;
 }
 
